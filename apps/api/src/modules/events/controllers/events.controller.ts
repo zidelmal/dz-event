@@ -11,9 +11,9 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { EventsService } from './events.service';
-import { StorageService } from '../../storage/storage.service';
-import { CreateEventDto, UpdateEventDto } from './dto/event.dto';
+import { EventsService } from '../services/events.service';
+import { StorageService } from '../../../storage/storage.service';
+import { CreateEventDto, UpdateEventDto } from '../dto/event.dto';
 
 @Controller('events')
 export class EventsController {

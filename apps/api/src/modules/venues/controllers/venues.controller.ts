@@ -11,9 +11,9 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { VenuesService } from './venues.service';
-import { StorageService } from '../../storage/storage.service';
-import { CreateVenueDto, UpdateVenueDto } from './dto/venue.dto';
+import { VenuesService } from '../services/venues.service';
+import { StorageService } from '../../../storage/storage.service';
+import { CreateVenueDto, UpdateVenueDto } from '../dto/venue.dto';
 
 @Controller('venues')
 export class VenuesController {
