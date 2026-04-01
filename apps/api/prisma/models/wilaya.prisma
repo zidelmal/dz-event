@@ -1,0 +1,10 @@
+model Wilaya {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  code      Int  @unique
+  venues    Venue[]
+  events    Event[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

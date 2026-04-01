@@ -1,0 +1,27 @@
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  type        String?
+  startDate   DateTime
+  endDate     DateTime
+  price       Float?
+  posterUrl   String?
+
+  venueId     Int
+  wilayaId    Int
+  eventTypeId Int
+
+  venue     Venue     @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  wilaya    Wilaya    @relation(fields: [wilayaId], references: [id], onDelete: Cascade)
+  eventType EventType @relation(fields: [eventTypeId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EventType {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  events Event[]
+}

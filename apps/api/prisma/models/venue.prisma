@@ -1,0 +1,28 @@
+model Venue {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  capacity    Int?
+  address     String
+  phone       String?
+  email       String?
+  latitude    Float?
+  longitude   Float?
+  imageUrl    String?
+
+  wilayaId    Int
+  venueTypeId Int
+
+  venueType VenueType @relation(fields: [venueTypeId], references: [id])
+  wilaya    Wilaya    @relation(fields: [wilayaId], references: [id], onDelete: Cascade)
+  events    Event[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VenueType {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  venues Venue[]
+}
