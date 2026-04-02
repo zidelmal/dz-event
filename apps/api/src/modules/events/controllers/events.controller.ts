@@ -58,16 +58,6 @@ export class EventsController {
     });
   }
 
-  @Get('establishment/:establishmentId')
-  findByEstablishment(@Param('establishmentId', ParseIntPipe) establishmentId: number) {
-    return this.eventsService.findByEstablishment(establishmentId);
-  }
-
-  @Get('wilaya/:wilayaId')
-  findByWilaya(@Param('wilayaId', ParseIntPipe) wilayaId: number) {
-    return this.eventsService.findByWilaya(wilayaId);
-  }
-
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.eventsService.findOne(id);

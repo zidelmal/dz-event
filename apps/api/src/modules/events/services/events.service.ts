@@ -88,28 +88,6 @@ export class EventsService {
     });
   }
 
-  findByEstablishment(establishmentId: number) {
-    return this.prisma.event.findMany({
-      where: { establishmentId },
-      include: {
-        establishment: true,
-        wilaya: true,
-        eventType: true,
-      },
-    });
-  }
-
-  findByWilaya(wilayaId: number) {
-    return this.prisma.event.findMany({
-      where: { wilayaId },
-      include: {
-        establishment: true,
-        wilaya: true,
-        eventType: true,
-      },
-    });
-  }
-
   update(id: number, data: UpdateEventDto) {
     return this.prisma.event.update({
       where: { id },
