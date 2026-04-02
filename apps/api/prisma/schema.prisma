@@ -4,17 +4,15 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = []
-  generatorMode   = "library"
+  provider        = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
   binaryTargets   = ["native"]
-  engineType      = "binary"
   transpile       = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 // MODELS_START

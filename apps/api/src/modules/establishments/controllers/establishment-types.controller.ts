@@ -16,8 +16,8 @@ export class EstablishmentTypesController {
   constructor(private readonly establishmentTypesService: EstablishmentTypesService) {}
 
   @Post()
-  create(@Body() createEstablishmentTypeDto: CreateEstablishmentTypeDto) {
-    return this.establishmentTypesService.create(createEstablishmentTypeDto);
+  create(@Body() createestablishmentTypeDto: CreateEstablishmentTypeDto) {
+    return this.establishmentTypesService.create(createestablishmentTypeDto);
   }
 
   @Get()
@@ -33,9 +33,9 @@ export class EstablishmentTypesController {
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateEstablishmentTypeDto: UpdateEstablishmentTypeDto,
+    @Body() updateestablishmentTypeDto: UpdateEstablishmentTypeDto,
   ) {
-    return this.establishmentTypesService.update(id, updateEstablishmentTypeDto);
+    return this.establishmentTypesService.update(id, updateestablishmentTypeDto);
   }
 
   @Delete(':id')

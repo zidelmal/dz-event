@@ -32,7 +32,7 @@ export class EstablishmentTypesService {
     });
   }
 
-  update(id: number, data: UpdateestablishmentTypeDto) {
+  update(id: number, data: UpdateEstablishmentTypeDto) {
     return this.prisma.establishmentType.update({
       where: { id },
       data,

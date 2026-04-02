@@ -13,7 +13,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { EstablishmentsService } from '../services/establishments.service';
 import { StorageService } from '../../../storage/storage.service';
-import { CreateEstablishmentDto, UpdateEstablishmentDto } from '../dto/establishments.dto';
+import { CreateEstablishmentDto, UpdateEstablishmentDto } from '../dto/establishment.dto';
 
 @Controller('establishments')
 export class EstablishmentsController {

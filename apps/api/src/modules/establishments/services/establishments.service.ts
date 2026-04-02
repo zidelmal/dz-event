@@ -49,7 +49,7 @@ export class EstablishmentsService {
     });
   }
 
-  update(id: number, data: UpdateestablishmentDto) {
+  update(id: number, data: UpdateEstablishmentDto) {
     return this.prisma.establishment.update({
       where: { id },
       data,
