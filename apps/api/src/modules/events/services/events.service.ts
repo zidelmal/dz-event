@@ -4,7 +4,7 @@ import { CreateEventDto, UpdateEventDto } from '../dto/event.dto';
 
 @Injectable()
 export class EventsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   create(data: CreateEventDto) {
     return this.prisma.event.create({
@@ -56,12 +56,10 @@ export class EventsService {
       where.eventTypeId = filters.eventTypeId;
     }
 
-    if (filters?.priceMax !== undefined) {
+    if (filters?.free === true) {
+      where.free = true;
+    } else if (filters?.priceMax !== undefined) {
       where.price = { lte: filters.priceMax };
-    }
-
-    if (filters?.free !== undefined) {
-      where.free = filters.free;
     }
 
     return this.prisma.event.findMany({

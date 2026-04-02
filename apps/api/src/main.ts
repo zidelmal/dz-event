@@ -18,6 +18,13 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
+  app.enableCors({
+    origin: process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Authorization, Accept',
+  });
+
   app.useGlobalFilters(new PrismaClientExceptionFilter());
 
   const port = Number(process.env.PORT) || 3001;

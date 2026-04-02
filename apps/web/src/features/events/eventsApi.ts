@@ -15,6 +15,9 @@ export type Event = {
     eventTypeId: number;
     createdAt: string;
     updatedAt: string;
+    establishment?: { id: number; name: string; capacity?: number; address?: string };
+    wilaya?: { id: number; name: string; code?: number };
+    eventType?: { id: number; name: string };
 };
 
 export type EventFilter = {
