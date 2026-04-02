@@ -17,8 +17,35 @@ export class EstablishmentsService {
     });
   }
 
-  findAll() {
+  findAll(filters?: {
+    search?: string;
+    wilayaId?: number;
+    establishmentTypeId?: number;
+    capacityMin?: number;
+  }) {
+    const where: any = {};
+
+    if (filters?.search) {
+      where.OR = [
+        { name: { contains: filters.search, mode: 'insensitive' } },
+        { description: { contains: filters.search, mode: 'insensitive' } },
+      ];
+    }
+
+    if (filters?.wilayaId) {
+      where.wilayaId = filters.wilayaId;
+    }
+
+    if (filters?.establishmentTypeId) {
+      where.establishmentTypeId = filters.establishmentTypeId;
+    }
+
+    if (filters?.capacityMin) {
+      where.capacity = { gte: filters.capacityMin };
+    }
+
     return this.prisma.establishment.findMany({
+      where,
       include: {
         wilaya: true,
         establishmentType: true,

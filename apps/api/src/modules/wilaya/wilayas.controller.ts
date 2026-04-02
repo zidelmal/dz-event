@@ -7,6 +7,7 @@ import {
   Put,
   Delete,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { WilayasService } from './wilayas.service';
 import { CreateWilayaDto, UpdateWilayaDto } from './dto/wilaya.dto';
@@ -21,8 +22,8 @@ export class WilayasController {
   }
 
   @Get()
-  findAll() {
-    return this.wilayasService.findAll();
+  findAll(@Query('search') search?: string) {
+    return this.wilayasService.findAll(search);
   }
 
   @Get(':id')

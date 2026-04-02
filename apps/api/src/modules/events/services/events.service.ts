@@ -17,12 +17,62 @@ export class EventsService {
     });
   }
 
-  findAll() {
+  findAll(filters?: {
+    search?: string;
+    startDate?: Date;
+    endDate?: Date;
+    wilayaId?: number;
+    establishmentId?: number;
+    eventTypeId?: number;
+    priceMax?: number;
+    free?: boolean;
+  }) {
+    const where: any = {};
+
+    if (filters?.search) {
+      where.OR = [
+        { title: { contains: filters.search, mode: 'insensitive' } },
+        { description: { contains: filters.search, mode: 'insensitive' } },
+      ];
+    }
+
+    if (filters?.startDate) {
+      where.startDate = { gte: filters.startDate };
+    }
+
+    if (filters?.endDate) {
+      where.endDate = { lte: filters.endDate };
+    }
+
+    if (filters?.wilayaId) {
+      where.wilayaId = filters.wilayaId;
+    }
+
+    if (filters?.establishmentId) {
+      where.establishmentId = filters.establishmentId;
+    }
+
+    if (filters?.eventTypeId) {
+      where.eventTypeId = filters.eventTypeId;
+    }
+
+    if (filters?.priceMax !== undefined) {
+      where.price = { lte: filters.priceMax };
+    }
+
+    if (filters?.free !== undefined) {
+      where.free = filters.free;
+    }
+
     return this.prisma.event.findMany({
+      where,
       include: {
         establishment: true,
         wilaya: true,
         eventType: true,
+      },
+      orderBy: {
+        startDate: 'asc',
       },
     });
   }

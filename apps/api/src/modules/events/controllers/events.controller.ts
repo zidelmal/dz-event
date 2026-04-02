@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { EventsService } from '../services/events.service';
@@ -35,8 +36,26 @@ export class EventsController {
   }
 
   @Get()
-  findAll() {
-    return this.eventsService.findAll();
+  findAll(
+    @Query('search') search?: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+    @Query('wilayaId') wilayaId?: string,
+    @Query('establishmentId') establishmentId?: string,
+    @Query('eventTypeId') eventTypeId?: string,
+    @Query('priceMax') priceMax?: string,
+    @Query('free') free?: string,
+  ) {
+    return this.eventsService.findAll({
+      search,
+      startDate: startDate ? new Date(startDate) : undefined,
+      endDate: endDate ? new Date(endDate) : undefined,
+      wilayaId: wilayaId ? parseInt(wilayaId) : undefined,
+      establishmentId: establishmentId ? parseInt(establishmentId) : undefined,
+      eventTypeId: eventTypeId ? parseInt(eventTypeId) : undefined,
+      priceMax: priceMax ? parseFloat(priceMax) : undefined,
+      free: free ? free === 'true' : undefined,
+    });
   }
 
   @Get('establishment/:establishmentId')

@@ -10,8 +10,18 @@ export class WilayasService {
     return this.prisma.wilaya.create({ data });
   }
 
-  findAll() {
+  findAll(search?: string) {
+    const where: any = {};
+
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { code: { equals: isNaN(Number(search)) ? undefined : Number(search) } },
+      ].filter(Boolean);
+    }
+
     return this.prisma.wilaya.findMany({
+      where,
       include: {
         establishments: true,
         events: true,

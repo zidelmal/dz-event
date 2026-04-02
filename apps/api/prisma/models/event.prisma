@@ -6,6 +6,7 @@ model Event {
   startDate   DateTime
   endDate     DateTime
   price       Float?
+  free        Boolean  @default(false)
   posterUrl   String?
 
   establishmentId     Int

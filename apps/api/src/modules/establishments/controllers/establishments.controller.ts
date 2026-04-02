@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { EstablishmentsService } from '../services/establishments.service';
@@ -35,8 +36,18 @@ export class EstablishmentsController {
   }
 
   @Get()
-  findAll() {
-    return this.establishmentsService.findAll();
+  findAll(
+    @Query('search') search?: string,
+    @Query('wilayaId') wilayaId?: string,
+    @Query('establishmentTypeId') establishmentTypeId?: string,
+    @Query('capacityMin') capacityMin?: string,
+  ) {
+    return this.establishmentsService.findAll({
+      search,
+      wilayaId: wilayaId ? parseInt(wilayaId) : undefined,
+      establishmentTypeId: establishmentTypeId ? parseInt(establishmentTypeId) : undefined,
+      capacityMin: capacityMin ? parseInt(capacityMin) : undefined,
+    });
   }
 
   @Get('wilaya/:wilayaId')
