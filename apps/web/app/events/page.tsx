@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from 'react';
-import { getEventTypes, type EventType } from '../../src/features/events/eventTypesApi';
-import { getEvents, type Event, type EventFilter } from '../../src/features/events/eventsApi';
-import { getWilayas, type Wilaya } from '../../src/features/wilayas/wilayasApi';
-import { EventCard } from '../../src/shared/components/EventCard';
+import { eventTypesApi } from '@web/features/events/api/eventTypesApi';
+import { eventsApi } from '@web/features/events/api/eventsApi';
+import { wilayasApi } from '@web/features/wilayas/api/wilayasApi';
+import { type Event, type EventFilter, type EventType } from '@web/features/events/types';
+import { type Wilaya } from '@web/features/wilayas/types';
+import { EventCard } from '@web/shared/components/cards/EventCard';
 import styles from './events.module.css';
 
 export default function EventsPage() {
@@ -27,7 +29,7 @@ export default function EventsPage() {
         setLoading(true);
         setError('');
         try {
-            const data = await getEvents(filters);
+            const data = await eventsApi.getEvents(filters);
             setEvents(data);
         } catch (e) {
             setError((e as Error).message);
@@ -39,7 +41,7 @@ export default function EventsPage() {
     useEffect(() => {
         const boot = async () => {
             setLoading(true);
-            const [w, types] = await Promise.all([getWilayas(), getEventTypes()]);
+            const [w, types] = await Promise.all([wilayasApi.getWilayas(), eventTypesApi.getEventTypes()]);
             setWilayas(w);
             setEventTypes(types);
             setLoading(false);

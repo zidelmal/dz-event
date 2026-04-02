@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { getEvents, type Event } from '../src/features/events/eventsApi';
-import { getWilayas, type Wilaya } from '../src/features/wilayas/wilayasApi';
-import { EventCard } from '../src/shared/components/EventCard';
+import { eventsApi } from '@web/features/events/api/eventsApi';
+import { type Event } from '@web/features/events/types';
+import { wilayasApi } from '@web/features/wilayas/api/wilayasApi';
+import { type Wilaya } from '@web/features/wilayas/types';
+import { EventCard } from '@web/shared/components/cards/EventCard';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -17,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      const [loadedWilayas, loadedEvents] = await Promise.all([getWilayas(), getEvents({})]);
+      const [loadedWilayas, loadedEvents] = await Promise.all([wilayasApi.getWilayas(), eventsApi.getEvents({})]);
       setWilayas(loadedWilayas);
       setEvents(loadedEvents);
       setLoading(false);

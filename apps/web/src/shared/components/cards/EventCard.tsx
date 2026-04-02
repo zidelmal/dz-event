@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from './EventCard.module.css';
 
-import type { Event } from '../../features/events/eventsApi';
+import type { Event } from '@web/features/events/types';
 
 type Props = {
   event: Event;

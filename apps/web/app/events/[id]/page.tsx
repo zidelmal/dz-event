@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getEvent, getEvents, type Event } from '../../../src/features/events/eventsApi';
-import { getEstablishment } from '../../../src/features/establishments/establishmentsApi';
+import { eventsApi } from '@web/features/events/api/eventsApi';
+import { establishmentsApi } from '@web/features/establishments/api/establishmentsApi';
 import styles from './event-detail.module.css';
-import { ReserveButton } from '../../../src/shared/components/ReserveButton';
-import { EventMap } from '../../../src/shared/components/EventMap';
+import { ReserveButton } from '@web/shared/components/ReserveButton';
+import { EventMap } from '@web/shared/components/EventMap';
 
 type Props = { params: { id: string } };
 
@@ -17,12 +17,12 @@ export default async function EventDetailPage({ params }: Props) {
         notFound();
     }
 
-    const event = await getEvent(id);
+    const event = await eventsApi.getEvent(id);
     if (!event) notFound();
 
-    const establishment = await getEstablishment(event.establishmentId);
+    const establishment = await establishmentsApi.getEstablishment(event.establishmentId);
 
-    const similarEvents = await getEvents({
+    const similarEvents = await eventsApi.getEvents({
         wilayaId: event.wilayaId,
         eventTypeId: event.eventTypeId,
     });
@@ -46,7 +46,6 @@ export default async function EventDetailPage({ params }: Props) {
                     <p>Lieu: {establishment?.name || 'À définir'}</p>
                     <p>Type: {event.eventType?.name || event.type || 'Inconnu'}</p>
                     <p>Prix: {event.free ? 'Gratuit' : event.price ? `${event.price} DA` : 'À définir'}</p>
-                    {/* <button className={styles.cta} onClick={() => alert('Réservation en cours de développement...')}>Réserver</button> */}
                     <ReserveButton />
                 </div>
             </section>
