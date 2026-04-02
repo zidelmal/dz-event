@@ -21,7 +21,7 @@ export class EventsController {
   constructor(
     private readonly eventsService: EventsService,
     private readonly storageService: StorageService,
-  ) {}
+  ) { }
 
   @Post()
   @UseInterceptors(FileInterceptor('poster'))
@@ -30,7 +30,7 @@ export class EventsController {
     @UploadedFile() file: any,
   ) {
     if (file) {
-      createEventDto.posterUrl = this.storageService.saveFile(file);
+      createEventDto.posterUrl = await this.storageService.saveFile(file);
     }
     return this.eventsService.create(createEventDto);
   }
@@ -71,7 +71,7 @@ export class EventsController {
     @UploadedFile() file: any,
   ) {
     if (file) {
-      updateEventDto.posterUrl = this.storageService.saveFile(file);
+      updateEventDto.posterUrl = await this.storageService.saveFile(file);
     }
     return this.eventsService.update(id, updateEventDto);
   }

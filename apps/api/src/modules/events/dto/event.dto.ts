@@ -3,7 +3,7 @@ export class CreateEventDto {
   description?: string;
   type?: string;
   startDate: Date;
-  endDate: Date;
+  endDate?: Date;
   price?: number;
   free?: boolean;
   posterUrl?: string;

@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateEventDto, UpdateEventDto } from '../dto/event.dto';
+import { Prisma } from 'src/generated/prisma/browser';
 
 @Injectable()
 export class EventsService {
   constructor(private prisma: PrismaService) { }
 
   create(data: CreateEventDto) {
+
+    const prismaData = this.cleanUndefined(data);
     return this.prisma.event.create({
-      data,
+      data: prismaData as Prisma.EventUncheckedCreateInput,
       include: {
         establishment: true,
         wilaya: true,
@@ -102,5 +105,11 @@ export class EventsService {
     return this.prisma.event.delete({
       where: { id },
     });
+  }
+
+  cleanUndefined<T extends object>(obj: T): Partial<T> {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, v]) => v !== undefined && v !== null)
+    ) as Partial<T>;
   }
 }

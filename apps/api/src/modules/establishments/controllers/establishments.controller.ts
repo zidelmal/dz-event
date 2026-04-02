@@ -21,7 +21,7 @@ export class EstablishmentsController {
   constructor(
     private readonly establishmentsService: EstablishmentsService,
     private readonly storageService: StorageService,
-  ) {}
+  ) { }
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
@@ -30,7 +30,7 @@ export class EstablishmentsController {
     @UploadedFile() file: any,
   ) {
     if (file) {
-      createEstablishmentDto.imageUrl = this.storageService.saveFile(file);
+      createEstablishmentDto.imageUrl = await this.storageService.saveFile(file);
     }
     return this.establishmentsService.create(createEstablishmentDto);
   }
@@ -68,7 +68,7 @@ export class EstablishmentsController {
     @UploadedFile() file: any,
   ) {
     if (file) {
-      updateEstablishmentDto.imageUrl = this.storageService.saveFile(file);
+      updateEstablishmentDto.imageUrl = await this.storageService.saveFile(file);
     }
     return this.establishmentsService.update(id, updateEstablishmentDto);
   }
