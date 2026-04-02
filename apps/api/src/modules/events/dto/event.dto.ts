@@ -6,7 +6,7 @@ export class CreateEventDto {
   endDate: Date;
   price?: number;
   posterUrl?: string;
-  venueId: number;
+  establishmentId: number;
   wilayaId: number;
   eventTypeId: number;
 }
@@ -19,7 +19,7 @@ export class UpdateEventDto {
   endDate?: Date;
   price?: number;
   posterUrl?: string;
-  venueId?: number;
+  establishmentId?: number;
   wilayaId?: number;
   eventTypeId?: number;
 }

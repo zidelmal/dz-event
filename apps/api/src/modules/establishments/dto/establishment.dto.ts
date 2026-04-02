@@ -1,4 +1,4 @@
-export class CreateVenueDto {
+export class CreateEstablishmentDto {
   name: string;
   description?: string;
   capacity: number;
@@ -9,10 +9,10 @@ export class CreateVenueDto {
   longitude?: number;
   imageUrl?: string;
   wilayaId: number;
-  venueTypeId: number;
+  establishmentTypeId: number;
 }
 
-export class UpdateVenueDto {
+export class UpdateEstablishmentDto {
   name?: string;
   description?: string;
   capacity?: number;
@@ -23,5 +23,5 @@ export class UpdateVenueDto {
   longitude?: number;
   imageUrl?: string;
   wilayaId?: number;
-  venueTypeId?: number;
+  establishmentTypeId?: number;
 }

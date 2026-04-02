@@ -8,11 +8,11 @@ model Event {
   price       Float?
   posterUrl   String?
 
-  venueId     Int
+  establishmentId     Int
   wilayaId    Int
   eventTypeId Int
 
-  venue     Venue     @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  establishment Establishment @relation(fields: [establishmentId], references: [id], onDelete: Cascade)
   wilaya    Wilaya    @relation(fields: [wilayaId], references: [id], onDelete: Cascade)
   eventType EventType @relation(fields: [eventTypeId], references: [id])
 

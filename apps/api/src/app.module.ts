@@ -5,7 +5,7 @@ import * as path from 'path';
 import { PrismaModule } from './prisma/prisma.module'
 import { StorageModule } from './storage/storage.module';
 import { WilayasModule } from './modules/wilaya/wilayas.module';
-import { VenuesModule } from './modules/venues/venues.module';
+import { EstablishmentsModule } from './modules/establishments/establishments.module';
 import { EventsModule } from './modules/events/events.module';
 
 @Module({
@@ -20,7 +20,7 @@ import { EventsModule } from './modules/events/events.module';
     PrismaModule,
     StorageModule,
     WilayasModule,
-    VenuesModule,
+    EstablishmentsModule,
     EventsModule,
   ],
   controllers: [],

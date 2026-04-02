@@ -39,9 +39,9 @@ export class EventsController {
     return this.eventsService.findAll();
   }
 
-  @Get('venue/:venueId')
-  findByVenue(@Param('venueId', ParseIntPipe) venueId: number) {
-    return this.eventsService.findByVenue(venueId);
+  @Get('establishment/:establishmentId')
+  findByEstablishment(@Param('establishmentId', ParseIntPipe) establishmentId: number) {
+    return this.eventsService.findByEstablishment(establishmentId);
   }
 
   @Get('wilaya/:wilayaId')

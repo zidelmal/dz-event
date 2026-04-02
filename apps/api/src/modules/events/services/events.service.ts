@@ -10,7 +10,7 @@ export class EventsService {
     return this.prisma.event.create({
       data,
       include: {
-        venue: true,
+        establishment: true,
         wilaya: true,
         eventType: true,
       },
@@ -20,7 +20,7 @@ export class EventsService {
   findAll() {
     return this.prisma.event.findMany({
       include: {
-        venue: true,
+        establishment: true,
         wilaya: true,
         eventType: true,
       },
@@ -31,18 +31,18 @@ export class EventsService {
     return this.prisma.event.findUnique({
       where: { id },
       include: {
-        venue: true,
+        establishment: true,
         wilaya: true,
         eventType: true,
       },
     });
   }
 
-  findByVenue(venueId: number) {
+  findByEstablishment(establishmentId: number) {
     return this.prisma.event.findMany({
-      where: { venueId },
+      where: { establishmentId },
       include: {
-        venue: true,
+        establishment: true,
         wilaya: true,
         eventType: true,
       },
@@ -53,7 +53,7 @@ export class EventsService {
     return this.prisma.event.findMany({
       where: { wilayaId },
       include: {
-        venue: true,
+        establishment: true,
         wilaya: true,
         eventType: true,
       },
@@ -65,7 +65,7 @@ export class EventsService {
       where: { id },
       data,
       include: {
-        venue: true,
+        establishment: true,
         wilaya: true,
         eventType: true,
       },

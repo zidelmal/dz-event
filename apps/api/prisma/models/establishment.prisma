@@ -1,4 +1,4 @@
-model Venue {
+model Establishment {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
@@ -11,9 +11,9 @@ model Venue {
   imageUrl    String?
 
   wilayaId    Int
-  venueTypeId Int
+  establishmentTypeId Int
 
-  venueType VenueType @relation(fields: [venueTypeId], references: [id])
+  establishmentType EstablishmentType @relation(fields: [establishmentTypeId], references: [id])
   wilaya    Wilaya    @relation(fields: [wilayaId], references: [id], onDelete: Cascade)
   events    Event[]
 
@@ -21,8 +21,8 @@ model Venue {
   updatedAt DateTime @updatedAt
 }
 
-model VenueType {
+model EstablishmentType {
   id     Int     @id @default(autoincrement())
   name   String  @unique
-  venues Venue[]
+  establishments Establishment[]
 }

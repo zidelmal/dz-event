@@ -11,59 +11,59 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { VenuesService } from '../services/venues.service';
+import { EstablishmentsService } from '../services/establishments.service';
 import { StorageService } from '../../../storage/storage.service';
-import { CreateVenueDto, UpdateVenueDto } from '../dto/venue.dto';
+import { CreateEstablishmentDto, UpdateEstablishmentDto } from '../dto/establishments.dto';
 
-@Controller('venues')
-export class VenuesController {
+@Controller('establishments')
+export class EstablishmentsController {
   constructor(
-    private readonly venuesService: VenuesService,
+    private readonly establishmentsService: EstablishmentsService,
     private readonly storageService: StorageService,
   ) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   async create(
-    @Body() createVenueDto: CreateVenueDto,
+    @Body() createEstablishmentDto: CreateEstablishmentDto,
     @UploadedFile() file: any,
   ) {
     if (file) {
-      createVenueDto.imageUrl = this.storageService.saveFile(file);
+      createEstablishmentDto.imageUrl = this.storageService.saveFile(file);
     }
-    return this.venuesService.create(createVenueDto);
+    return this.establishmentsService.create(createEstablishmentDto);
   }
 
   @Get()
   findAll() {
-    return this.venuesService.findAll();
+    return this.establishmentsService.findAll();
   }
 
   @Get('wilaya/:wilayaId')
   findByWilaya(@Param('wilayaId', ParseIntPipe) wilayaId: number) {
-    return this.venuesService.findByWilaya(wilayaId);
+    return this.establishmentsService.findByWilaya(wilayaId);
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.venuesService.findOne(id);
+    return this.establishmentsService.findOne(id);
   }
 
   @Put(':id')
   @UseInterceptors(FileInterceptor('image'))
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateVenueDto: UpdateVenueDto,
+    @Body() updateEstablishmentDto: UpdateEstablishmentDto,
     @UploadedFile() file: any,
   ) {
     if (file) {
-      updateVenueDto.imageUrl = this.storageService.saveFile(file);
+      updateEstablishmentDto.imageUrl = this.storageService.saveFile(file);
     }
-    return this.venuesService.update(id, updateVenueDto);
+    return this.establishmentsService.update(id, updateEstablishmentDto);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.venuesService.remove(id);
+    return this.establishmentsService.remove(id);
   }
 }

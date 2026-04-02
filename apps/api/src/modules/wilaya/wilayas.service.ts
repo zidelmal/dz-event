@@ -13,7 +13,7 @@ export class WilayasService {
   findAll() {
     return this.prisma.wilaya.findMany({
       include: {
-        venues: true,
+        establishments: true,
         events: true,
       },
     });
@@ -23,7 +23,7 @@ export class WilayasService {
     return this.prisma.wilaya.findUnique({
       where: { id },
       include: {
-        venues: true,
+        establishments: true,
         events: true,
       },
     });
@@ -34,7 +34,7 @@ export class WilayasService {
       where: { id },
       data,
       include: {
-        venues: true,
+        establishments: true,
         events: true,
       },
     });

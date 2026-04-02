@@ -1,68 +1,68 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-import { CreateVenueDto, UpdateVenueDto } from '../dto/venue.dto';
+import { CreateEstablishmentDto, UpdateEstablishmentDto } from '../dto/establishment.dto';
 
 @Injectable()
-export class VenuesService {
+export class EstablishmentsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreateVenueDto) {
-    return this.prisma.venue.create({
+  create(data: CreateEstablishmentDto) {
+    return this.prisma.establishment.create({
       data,
       include: {
         wilaya: true,
-        venueType: true,
+        establishmentType: true,
         events: true,
       },
     });
   }
 
   findAll() {
-    return this.prisma.venue.findMany({
+    return this.prisma.establishment.findMany({
       include: {
         wilaya: true,
-        venueType: true,
+        establishmentType: true,
         events: true,
       },
     });
   }
 
   findOne(id: number) {
-    return this.prisma.venue.findUnique({
+    return this.prisma.establishment.findUnique({
       where: { id },
       include: {
         wilaya: true,
-        venueType: true,
+        establishmentType: true,
         events: true,
       },
     });
   }
 
   findByWilaya(wilayaId: number) {
-    return this.prisma.venue.findMany({
+    return this.prisma.establishment.findMany({
       where: { wilayaId },
       include: {
         wilaya: true,
-        venueType: true,
+        establishmentType: true,
         events: true,
       },
     });
   }
 
-  update(id: number, data: UpdateVenueDto) {
-    return this.prisma.venue.update({
+  update(id: number, data: UpdateestablishmentDto) {
+    return this.prisma.establishment.update({
       where: { id },
       data,
       include: {
         wilaya: true,
-        venueType: true,
+        establishmentType: true,
         events: true,
       },
     });
   }
 
   remove(id: number) {
-    return this.prisma.venue.delete({
+    return this.prisma.establishment.delete({
       where: { id },
     });
   }
