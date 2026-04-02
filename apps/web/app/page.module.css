@@ -1,4 +1,9 @@
 .page {
+  background: #0f0a08;
+  color: #f4ead8;
+}
+
+.page {
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
   --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
@@ -6,14 +11,13 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
+  padding: 32px 16px;
   font-synthesis: none;
+
+  background: #0f0a08;
+  color: #f4ead8;
+  min-height: 100vh;
+  padding: 32px 16px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,11 +31,84 @@
   }
 }
 
-.main {
+.mainHome {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  gap: 28px;
+}
+
+.hero {
+  padding: 20px;
+  border: 1px solid #4c382a;
+  border-radius: 16px;
+  background: #1e1712;
+}
+
+.hero h1 {
+  color: #edca9f;
+  margin: 0 0 8px;
+}
+
+.hero p {
+  margin: 0 0 14px;
+  color: #d8c9b2;
+}
+
+.cta {
+  display: inline-block;
+  background: #d4a269;
+  color: #1f0f05;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.spotlight {
+  border: 1px solid #3e2e24;
+  border-radius: 16px;
+  padding: 16px;
+  background: #1c1410;
+}
+
+.spotlight h2 {
+  margin: 0 0 8px;
+  color: #f4e5d2;
+}
+
+.spotlight p {
+  margin: 0 0 12px;
+  color: #bca890;
+}
+
+.footerHome {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding: 14px 0;
+  border-top: 1px solid #3c2f24;
+  color: #b5a38f;
+}
+
+.footerHome a {
+  color: #d6c4a9;
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding: 16px;
+  }
+
+  .mainHome {
+    padding: 16px;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 .main ol {
@@ -183,4 +260,67 @@ button.secondary {
   .logo {
     filter: invert();
   }
+}
+
+.actionRow {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.actionRow select,
+.actionRow input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #4f3e30;
+  background: #2a1f18;
+  color: #f0e6d8;
+  min-width: 180px;
+}
+
+.spotlightHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carousel {
+  overflow-x: auto;
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+  margin-bottom: 18px;
+}
+
+.carouselCard {
+  width: 220px;
+  border: 1px solid #483a2f;
+  border-radius: 12px;
+  background: #1d1612;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.carouselCard img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.carouselCard h3 {
+  margin: 8px;
+  font-size: 0.95rem;
+}
+
+.carouselCard p {
+  margin: 0 8px 8px;
+  color: #c8b49d;
+  font-size: 0.84rem;
+}
+
+.recentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
 }

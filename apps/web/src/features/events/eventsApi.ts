@@ -6,7 +6,7 @@ export type Event = {
     description?: string;
     type?: string;
     startDate: string;
-    endDate: string;
+    endDate?: string;
     price?: number;
     free?: boolean;
     posterUrl?: string;

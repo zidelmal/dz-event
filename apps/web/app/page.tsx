@@ -1,102 +1,83 @@
-import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
-import styles from "./page.module.css";
+"use client";
 
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string;
-  srcDark: string;
-};
-
-const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props;
-
-  return (
-    <>
-      <Image {...rest} src={srcLight} className="imgLight" />
-      <Image {...rest} src={srcDark} className="imgDark" />
-    </>
-  );
-};
+import Link from 'next/link';
+import { useEffect, useMemo, useState } from 'react';
+import { getEvents, type Event } from '../src/features/events/eventsApi';
+import { getWilayas, type Wilaya } from '../src/features/wilayas/wilayasApi';
+import { EventCard } from '../src/shared/components/EventCard';
+import styles from './page.module.css';
 
 export default function Home() {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [wilayas, setWilayas] = useState<Wilaya[]>([]);
+  const [search, setSearch] = useState('');
+  const [wilayaId, setWilayaId] = useState<number | ''>('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      setLoading(true);
+      const [loadedWilayas, loadedEvents] = await Promise.all([getWilayas(), getEvents({})]);
+      setWilayas(loadedWilayas);
+      setEvents(loadedEvents);
+      setLoading(false);
+    };
+    load();
+  }, []);
+
+  const filtered = useMemo(() => {
+    return events.filter((event) => {
+      if (search && !event.title.toLowerCase().includes(search.toLowerCase()) && !event.description?.toLowerCase().includes(search.toLowerCase())) {
+        return false;
+      }
+      if (wilayaId && event.wilayaId !== wilayaId) return false;
+      return true;
+    });
+  }, [events, search, wilayaId]);
+
+  const spotlight = filtered.slice(0, 6);
+
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <ThemeImage
-          className={styles.logo}
-          srcLight="turborepo-dark.svg"
-          srcDark="turborepo-light.svg"
-          alt="Turborepo logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>apps/web/app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      <main className={styles.mainHome}>
+        <header className={styles.hero}>
+          <h1>DZ Event</h1>
+          <p>Découvre les meilleurs événements d'Algérie : concerts, théâtres, expositions et plus.</p>
+          <div className={styles.actionRow}>
+            <select value={wilayaId} onChange={(e) => setWilayaId(e.target.value ? Number(e.target.value) : '')}>
+              <option value="">Toutes les wilayas</option>
+              {wilayas.map((w) => <option key={w.id} value={w.id}>{w.name}</option>)}
+            </select>
+            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Rechercher un événement..." />
+          </div>
+          <Link href="/events" className={styles.cta}>Voir tous les événements</Link>
+        </header>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new/clone?demo-description=Learn+to+implement+a+monorepo+with+a+two+Next.js+sites+that+has+installed+three+local+packages.&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4K8ZISWAzJ8X1504ca0zmC%2F0b21a1c6246add355e55816278ef54bc%2FBasic.png&demo-title=Monorepo+with+Turborepo&demo-url=https%3A%2F%2Fexamples-basic-web.vercel.sh%2F&from=templates&project-name=Monorepo+with+Turborepo&repository-name=monorepo-turborepo&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fturborepo%2Ftree%2Fmain%2Fexamples%2Fbasic&root-directory=apps%2Fdocs&skippable-integrations=1&teamSlug=vercel&utm_source=create-turbo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://turborepo.dev/docs?utm_source"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
+        <section className={styles.spotlight}>
+          <div className={styles.spotlightHeader}>
+            <h2>Spotlight</h2>
+            <p>Derniers événements</p>
+          </div>
+
+          {loading ? <p>Chargement...</p> : (
+            <div className={styles.carousel}>
+              {spotlight.map((event) => (
+                <article key={event.id} className={styles.carouselCard}>
+                  <img src={event.posterUrl || '/placeholder-event.jpg'} alt={event.title} />
+                  <div>
+                    <h3>{event.title}</h3>
+                    <p>{new Date(event.startDate).toLocaleDateString('fr-FR', { weekday: 'short', day: '2-digit', month: 'short' })}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          <div className={styles.recentGrid}>
+            {loading ? <p>Chargement...</p> : filtered.slice(0, 8).map((event) => <EventCard key={event.id} event={event} />)}
+          </div>
+        </section>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://turborepo.dev?utm_source=create-turbo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to turborepo.dev →
-        </a>
-      </footer>
     </div>
   );
 }
